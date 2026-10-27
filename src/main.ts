@@ -1,12 +1,19 @@
 const portrait = document.querySelector<HTMLDivElement>("#portrait")!;
 const spin = document.querySelector<HTMLButtonElement>("#spin")!;
 
+// @deno-types="./asset-url.d.ts"
+import earUrl from "./assets/spr_Ear.png?no-inline"; // made by me using Aseprite
+import hatUrl from "./assets/spr_Hat.png?no-inline"; // made by me using Aseprite
+
 function buildFace() {
   // The prototype grew inline. Keep it this way until the refactoring checkpoint.
   const face = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   face.setAttribute("viewBox", "0 0 200 200");
   face.setAttribute("role", "img");
-  face.setAttribute("aria-label", "A neutral face");
+  face.setAttribute(
+    "aria-label",
+    "A neutral face with big ears and a small hat",
+  );
 
   const head = document.createElementNS(
     "http://www.w3.org/2000/svg",
@@ -62,6 +69,32 @@ function buildFace() {
   mouth.setAttribute("stroke-width", "4");
   mouth.setAttribute("stroke-linecap", "round");
   face.append(mouth);
+
+  const leftEar = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "image",
+  );
+  leftEar.setAttribute("href", earUrl);
+  leftEar.setAttribute("x", "130");
+  leftEar.setAttribute("y", "60");
+  leftEar.style.transform = "scaleX(-1)";
+  leftEar.style.transformOrigin = "center";
+  face.append(leftEar);
+
+  const rightEar = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "image",
+  );
+  rightEar.setAttribute("href", earUrl);
+  rightEar.setAttribute("x", "130");
+  rightEar.setAttribute("y", "60");
+  face.append(rightEar);
+
+  const hat = document.createElementNS("http://www.w3.org/2000/svg", "image");
+  hat.setAttribute("href", hatUrl);
+  hat.setAttribute("x", "50");
+  hat.setAttribute("y", "-40");
+  face.append(hat);
 
   return face;
 }
