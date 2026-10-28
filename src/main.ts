@@ -5,7 +5,7 @@ const spin = document.querySelector<HTMLButtonElement>("#spin")!;
 const face = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 face.setAttribute("viewBox", "0 0 200 200");
 face.setAttribute("role", "img");
-face.setAttribute("aria-label", "A neutral face");
+face.setAttribute("aria-label", "A tired face");
 
 const head = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
 head.setAttribute("cx", "100");
@@ -17,26 +17,39 @@ head.setAttribute("stroke", "#302c29");
 head.setAttribute("stroke-width", "4");
 face.append(head);
 
-const leftEye = document.createElementNS(
+const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+const gradient = document.createElementNS(
   "http://www.w3.org/2000/svg",
-  "ellipse",
+  "linearGradient",
 );
-leftEye.setAttribute("cx", "72");
-leftEye.setAttribute("cy", "82");
-leftEye.setAttribute("rx", "6");
-leftEye.setAttribute("ry", "9");
-leftEye.setAttribute("fill", "#302c29");
+gradient.setAttribute("id", "tired-gradient");
+gradient.setAttribute("x1", "0%");
+gradient.setAttribute("y1", "0%");
+gradient.setAttribute("x2", "0%");
+gradient.setAttribute("y2", "100%");
+
+const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+stop1.setAttribute("offset", "0%");
+stop1.setAttribute("stop-color", "white");
+const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+stop2.setAttribute("offset", "100%");
+stop2.setAttribute("stop-color", "red");
+gradient.append(stop1, stop2);
+defs.append(gradient);
+face.append(defs);
+
+const leftEye = document.createElementNS("http://www.w3.org/2000/svg", "path");
+leftEye.setAttribute("d", "M 60 90 Q 70 100 80 80 Z");
+leftEye.setAttribute("fill", "url(#tired-gradient)");
+leftEye.setAttribute("stroke", "#000000");
+leftEye.setAttribute("stroke-width", "1");
 face.append(leftEye);
 
-const rightEye = document.createElementNS(
-  "http://www.w3.org/2000/svg",
-  "ellipse",
-);
-rightEye.setAttribute("cx", "128");
-rightEye.setAttribute("cy", "82");
-rightEye.setAttribute("rx", "6");
-rightEye.setAttribute("ry", "9");
-rightEye.setAttribute("fill", "#302c29");
+const rightEye = document.createElementNS("http://www.w3.org/2000/svg", "path");
+rightEye.setAttribute("d", "M 140 90 Q 130 100 120 80 Z");
+rightEye.setAttribute("fill", "url(#tired-gradient)");
+rightEye.setAttribute("stroke", "#000000");
+rightEye.setAttribute("stroke-width", "1");
 face.append(rightEye);
 
 const nose = document.createElementNS("http://www.w3.org/2000/svg", "line");
